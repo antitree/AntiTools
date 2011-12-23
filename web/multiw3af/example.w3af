@@ -1,0 +1,27 @@
+plugins
+    audit xsrf, htaccessMethods, sqli, sslCertificate, fileUpload, mxInjection, generic, localFileInclude, unSSL, redos, xpath, osCommanding, remoteFileInclude, dav, ssi, eval, buffOverflow, xss, xst, blindSqli, formatString, preg_replace, globalRedirect, LDAPi, phishingVector, frontpage, responseSplitting
+    back
+plugins
+    grep error500, collectCookies, httpAuthDetect
+    back
+plugins
+    output htmlFile, xmlFile, console
+    output config htmlFile
+        set fileName webmall_w3af.html
+        set verbose False
+        back
+    output config xmlFile
+        set fileName webmall_w3af.xml
+        back
+    output config console
+        set verbose False
+        back
+    back
+plugins
+    discovery serverHeader, afd, pykto, xssedDotCom, zone_h, hmap, allowedMethods, frontpage_version
+    back
+target
+    set target blerg
+    back
+start
+exit

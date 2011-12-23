@@ -1,0 +1,14 @@
+MULTIW3AF Script
+
+Simple script that wraps w3af so that you can scan multiple
+hosts and save the results. It requires w3af already installed
+and a valid w3af script. See example.w3af.
+
+# Setup #
+1) download w3af 
+  svn co https://w3af.svn.sourceforge.net/svnroot/w3af/trunk w3af
+2) put the multiw3af.py script into the w3af directory
+3) create a w3af script or modify the example included
+4) create a list of URLs to scan
+5) run!
+  ./multiw3af.py -i inputlist -s w3afscript
