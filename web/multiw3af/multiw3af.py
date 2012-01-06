@@ -11,7 +11,7 @@ import time
 
 def main():
   parser = OptionParser(usage="%prog -i listofurls \
--s pathtoscript.w3af [-o outputnames]", version="%prog 0.1")
+-s pathtoscript.w3af", version="%prog 0.1")
 
   parser.add_option("-i", dest="urls", action="store",
     help="list of URLs on separate lines (https://bla/")
@@ -68,10 +68,14 @@ def main():
 def fixScript(script, url):
   #parse input script
   #search for target and replace with line input
+  check = {"target": False, "output": False, "script": True}
 
   #strip url
   name = url.partition('/')[2][1:].strip()
-
+  if name == "":
+    print("Error: Make sure your urls start with http:// or https://")
+    sys.exit()
+  
  
   #set target
   for line in script:
@@ -80,6 +84,7 @@ def fixScript(script, url):
     if found:
       index = script.index(line)
       script[index] = "set target %s\n" % url
+      check['target'] = True
       print("generated custom target for %s" % url)
     
     #find text output names
@@ -87,18 +92,27 @@ def fixScript(script, url):
     if found:
       index = script.index(line)
       script[index] = "set fileName %s.txt\n" % name
+      check['output'] = True
     
     #find xml output names
     found = re.search("set fileName.+xml$", line)
     if found:
       index = script.index(line)
       script[index] = "set fileName %s.xml\n" % name
+      check['output'] = True
     
     #find html output names
     found = re.search("set fileName.+html$", line)
     if found:
       index = script.index(line)
       script[index] = "set fileName %s.html\n" % name
+      check['output'] = True
+
+  #check that everything is ready
+  for key in check:
+    if not check[key]:
+      print("No %s found in w3af script" % key)
+      sys.exit()
 
   #rewrite scripts
   filename = name + ".w3af"
