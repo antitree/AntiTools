@@ -16,3 +16,6 @@ sudo gem install wirble sqlite3 bundler
 ## install postgres
 
 ## install metasploit
+
+## Install resource scripts
+sudo cp anti* /opt/metasploit-framework
